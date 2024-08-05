@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Users</title>
+    <style>
+        table th, table td { padding: 5px; }
+    </style>
+</head>
+
+<body>
+<h1>Users</h1>
+
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Age</th>
+        <th>Remove</th>
+        <th>Update</th>
+    </tr>
+
+    <tr th:each="user : ${users}">
+        <td th:text="${user.name}">user.name</td>
+        <td th:text="${user.lastName}">user.lastName</td>
+        <td th:text="${user.age}">user.age</td>
+        <td>
+            <form th:action="@{/admin/delete}" method="post">
+                <input type="hidden" th:name="id" th:value="${user.id}" />
+                <button type="submit">Remove</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/admin/update}" method="get">
+                <input type="hidden" th:name="id" th:value="${user.id}" />
+                <button type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<br>
+
+<form th:action="@{/admin}" method="post">
+    <label>
+        <input type="text" name="Name" placeholder="Name"/>
+    </label><br>
+    <label>
+        <input type="text" name="lastName" placeholder="Surname"/>
+    </label><br>
+    <label>
+        <input type="text" name="age" placeholder="Age"/>
+    </label><br>
+    <label>
+        <input type="password" name="password" placeholder="password"/>
+    </label>
+    <input type="submit" value="Add user"/>
+</form>
+<br><br><br>
+<a href="/logout">Logout</a>
+</body>
+</html>
