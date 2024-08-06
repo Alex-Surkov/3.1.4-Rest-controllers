@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.service;
 
 
+import ru.kata.spring.boot_security.demo.dao.UserDTO;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
@@ -16,7 +17,7 @@ public interface UserService {
 
     User getUser(long id);
 
-    void updateUser(long id, User user);
+    void updateUser(long id, UserDTO user);
 
     void saveRole(Role role);
 

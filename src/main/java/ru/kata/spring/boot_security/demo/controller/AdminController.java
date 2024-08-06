@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.kata.spring.boot_security.demo.dao.UserDTO;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -64,9 +65,8 @@ public class AdminController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("user") User user, @ModelAttribute("id") long id, Model model) {
-        System.out.println(user);
-        userService.updateUser(id, user);
+    public String update(@ModelAttribute("user") UserDTO userDTO, Model model) {
+        userService.updateUser(userDTO.getId(), userDTO);
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "admin";

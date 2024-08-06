@@ -70,11 +70,11 @@ public class UserDaoImp implements UserDao {
 
 
     @Override
-    public void updateUser(long id, User user) {
+    public void updateUser(long id, UserDTO user) {
         TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.id = :id", User.class);
         User updatedUser = typedQuery.setParameter("id", id).getSingleResult();
         updatedUser.setUsername(user.getUsername());
-        updatedUser.setLastName(updatedUser.getLastName());
+        updatedUser.setLastName(user.getLastName());
         updatedUser.setAge(user.getAge());
     }
 

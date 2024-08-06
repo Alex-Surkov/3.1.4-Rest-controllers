@@ -18,9 +18,10 @@ public interface UserDao {
 
     User findByUsername(String name);
 
-    void updateUser(long id, User user);
+    void updateUser(long id, UserDTO user);
 
     void saveRole(Role role);
 
     void assignRoleToUser(User user, Role role);
+
 }
