@@ -45,9 +45,9 @@ public class UserDaoImp implements UserDao {
         return typedQuery.getSingleResult();
     }
 
-    @Query("Select u from User u left join fetch u.roles where u.name=:name")
+    @Query("Select u from User u left join fetch u.roles where u.userName=:name")
     public User findByUsername(String name) {
-        TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.name = :name", User.class);
+        TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.userName = :name", User.class);
         typedQuery.setParameter("name", name);
         return typedQuery.getSingleResult();
     }
@@ -64,7 +64,7 @@ public class UserDaoImp implements UserDao {
     public void updateUser(long id, String newName, int newAge, String newSurname) {
         TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.id = :id", User.class);
         User user = typedQuery.setParameter("id", id).getSingleResult();
-        user.setName(newName);
+        user.setUserName(newName);
         user.setLastName(newSurname);
         user.setAge(newAge);
     }

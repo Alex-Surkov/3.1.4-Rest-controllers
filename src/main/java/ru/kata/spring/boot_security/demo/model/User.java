@@ -3,8 +3,10 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,17 +17,17 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-@Component
 @Table(name = "users")
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String name;
+    @Column(name = "name")
+    private String userName;
     private String lastName;
     private int age;
     private String password;
@@ -44,24 +46,10 @@ public class User {
 
     }
 
-    public User(String name, String lastName, int age) {
-        this.name = name;
+    public User(String userName, String lastName, int age) {
+        this.userName = userName;
         this.lastName = lastName;
         this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void assignRole(Role role) {
@@ -70,13 +58,17 @@ public class User {
         }
         roles.add(role);
     }
-
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public String getUsername() {
+        return userName;
+    }
+
+    public void setUserName(String name) {
+        this.userName = name;
     }
 
     public String getLastName() {
@@ -95,7 +87,9 @@ public class User {
         this.age = age;
     }
 
-    public List<Role> getRoles() {
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
 
@@ -103,7 +97,37 @@ public class User {
         return password;
     }
 
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + userName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

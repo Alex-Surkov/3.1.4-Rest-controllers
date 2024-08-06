@@ -2,6 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -18,11 +19,12 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
 
-
+    private final PasswordEncoder encoder;
     private final UserService userService;
 
     @Autowired
-    public AdminController(UserService userService) {
+    public AdminController(PasswordEncoder encoder, UserService userService) {
+        this.encoder = encoder;
         this.userService = userService;
     }
 
@@ -41,7 +43,7 @@ public class AdminController {
             @RequestParam("age") int age,
             @RequestParam("password") String password,
             ModelMap model) {
-        userService.saveUser(name, lastName, age, password);
+        userService.saveUser(name, lastName, age, encoder.encode(password));
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "admin";

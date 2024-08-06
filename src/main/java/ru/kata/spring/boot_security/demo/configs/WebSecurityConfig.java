@@ -9,16 +9,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.security.PersonDetails;
+import ru.kata.spring.boot_security.demo.service.UserServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
-    private final PersonDetails personDetails;
+    private final UserServiceImpl personDetails;
 
     @Autowired
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, PersonDetails personDetails) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl personDetails) {
         this.successUserHandler = successUserHandler;
         this.personDetails = personDetails;
     }
