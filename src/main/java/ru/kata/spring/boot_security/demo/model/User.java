@@ -25,9 +25,9 @@ import java.util.List;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
     @Column(name = "name")
-    private String userName;
+    private String username;
     private String lastName;
     private int age;
     private String password;
@@ -46,8 +46,8 @@ public class User implements UserDetails {
 
     }
 
-    public User(String userName, String lastName, int age) {
-        this.userName = userName;
+    public User(String username, String lastName, int age) {
+        this.username = username;
         this.lastName = lastName;
         this.age = age;
     }
@@ -56,19 +56,20 @@ public class User implements UserDetails {
         if (roles == null) {
             roles = new ArrayList<>();
         }
-        roles.add(role);
+        this.roles.add(role);
     }
-    public Long getId() {
+
+    public long getId() {
         return id;
     }
 
 
     public String getUsername() {
-        return userName;
+        return username;
     }
 
-    public void setUserName(String name) {
-        this.userName = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public String getLastName() {
@@ -121,11 +122,12 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + userName + '\'' +
+                ", name='" + username + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 '}';

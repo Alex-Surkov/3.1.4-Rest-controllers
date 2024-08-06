@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
@@ -27,9 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Transactional
-    public void saveUser(String name, String lastName, int age, String password) throws HibernateException {
-        User user = new User(name, lastName, age);
-        user.setPassword(password);
+    public void saveUser(User user) throws HibernateException {
         dao.saveUser(user);
     }
 
@@ -50,12 +49,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public void updateUser(long id, String newName, int newAge, String newSurname) {
-        dao.updateUser(id, newName, newAge, newSurname);
+    public void updateUser(long id, User user) {
+        dao.updateUser(id, user);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return dao.findByUsername(username);
+    }
+
+    @Transactional
+    public void saveRole(Role role) {
+        dao.saveRole(role);
+    }
+
+    @Transactional
+    @Override
+    public void assignRoleToUser(User user, Role role) {
+        dao.assignRoleToUser(user, role);
     }
 }

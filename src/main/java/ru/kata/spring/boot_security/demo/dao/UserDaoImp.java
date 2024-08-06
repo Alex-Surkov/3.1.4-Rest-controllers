@@ -25,6 +25,15 @@ public class UserDaoImp implements UserDao {
         user.assignRole(getRoleByRolename("ROLE_USER"));
         manager.persist(user);
     }
+    public void saveRole(Role role) {
+        manager.persist(role);
+    }
+
+    @Override
+    public void assignRoleToUser(User user, Role role) {
+        user.assignRole(role);
+        manager.persist(user);
+    }
 
     @Override
     public void removeUserById(long id) {
@@ -45,9 +54,9 @@ public class UserDaoImp implements UserDao {
         return typedQuery.getSingleResult();
     }
 
-    @Query("Select u from User u left join fetch u.roles where u.userName=:name")
+    @Query("Select u from User u left join fetch u.roles where u.username=:name")
     public User findByUsername(String name) {
-        TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.userName = :name", User.class);
+        TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.username = :name", User.class);
         typedQuery.setParameter("name", name);
         return typedQuery.getSingleResult();
     }
@@ -61,12 +70,13 @@ public class UserDaoImp implements UserDao {
 
 
     @Override
-    public void updateUser(long id, String newName, int newAge, String newSurname) {
+    public void updateUser(long id, User user) {
         TypedQuery<User> typedQuery = manager.createQuery("select u from User u where u.id = :id", User.class);
-        User user = typedQuery.setParameter("id", id).getSingleResult();
-        user.setUserName(newName);
-        user.setLastName(newSurname);
-        user.setAge(newAge);
+        User updatedUser = typedQuery.setParameter("id", id).getSingleResult();
+        updatedUser.setUsername(user.getUsername());
+        updatedUser.setLastName(updatedUser.getLastName());
+        updatedUser.setAge(user.getAge());
     }
+
 
 }
