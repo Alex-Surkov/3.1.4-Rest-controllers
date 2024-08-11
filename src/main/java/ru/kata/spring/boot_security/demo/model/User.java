@@ -19,6 +19,7 @@ import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Table(name = "users")
 @Entity
@@ -28,6 +29,7 @@ public class User implements UserDetails {
     private long id;
     @Column(name = "name")
     private String username;
+    private String firstName;
     private String lastName;
     private int age;
     private String password;
@@ -46,10 +48,20 @@ public class User implements UserDetails {
 
     }
 
-    public User(String username, String lastName, int age) {
+    public List<Role> getRoles() {
+        return Objects.requireNonNullElseGet(roles, ArrayList::new);
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public User(String username, String firstName, String lastName, int age, String password) {
         this.username = username;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
+        this.password = password;
     }
 
     public void assignRole(Role role) {
@@ -96,6 +108,14 @@ public class User implements UserDetails {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 
 

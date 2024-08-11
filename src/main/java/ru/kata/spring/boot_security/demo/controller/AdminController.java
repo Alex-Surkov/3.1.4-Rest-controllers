@@ -2,6 +2,8 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +26,18 @@ public class AdminController {
     private final PasswordEncoder encoder;
     private final UserService userService;
 
+
+
     @Autowired
     public AdminController(PasswordEncoder encoder, UserService userService) {
         this.encoder = encoder;
         this.userService = userService;
+    }
+
+    @ModelAttribute("currentUser")
+    public User currentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (User) authentication.getPrincipal();
     }
 
 
@@ -40,7 +50,7 @@ public class AdminController {
 
     @PostMapping
     public String addUser(
-            @ModelAttribute("user") User user,
+            @ModelAttribute("user") UserDTO user,
             ModelMap model) {
         user.setPassword(encoder.encode(user.getPassword()));
         userService.saveUser(user);
@@ -56,12 +66,22 @@ public class AdminController {
         model.addAttribute("users", users);
         return "admin";
     }
+    @GetMapping("/delete")
+    public String deleteget(@RequestParam("id") long id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("id", id);
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "admin";
+    }
 
     @GetMapping("/update")
     public String update(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
         model.addAttribute("id", id);
-        return "update";
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
+        return "admin";
     }
 
     @PostMapping("/update")

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserDao {
 
-    void saveUser(User user);
+    void saveUser(UserDTO userDTO);
 
     void removeUserById(long id);
 

@@ -33,6 +33,7 @@ public class Role implements GrantedAuthority {
         return id;
     }
 
+
     @Override
     public String getAuthority() {
         return this.authority;
@@ -40,8 +41,6 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String toString() {
-        return "Role{" +
-                "role='" + authority + '\'' +
-                '}';
+        return authority;
     }
 }

@@ -29,8 +29,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 
     @Transactional
-    public void saveUser(User user) throws HibernateException {
-        dao.saveUser(user);
+    public void saveUser(UserDTO userDTO) throws HibernateException {
+        dao.saveUser(userDTO);
     }
 
     @Transactional

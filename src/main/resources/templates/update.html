@@ -18,8 +18,11 @@
 <form action="#" th:action="@{/admin/update}" th:object="${user}" method="post">
     <input type="hidden" th:field="*{id}"/>
 
-    <label for="username">Name</label>
+    <label for="username">Email</label>
     <input type="text" id="username" th:field="*{username}"/>
+
+    <label for="firstName">First Name</label>
+    <input type="text" id="firstName" th:field="*{firstName}"/>
 
     <label for="lastName">Surname</label>
     <input type="text" id="lastName" th:field="*{lastName}"/>
