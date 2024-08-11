@@ -48,20 +48,20 @@ public class User implements UserDetails {
 
     }
 
-    public List<Role> getRoles() {
-        return Objects.requireNonNullElseGet(roles, ArrayList::new);
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
     public User(String username, String firstName, String lastName, int age, String password) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.password = password;
+    }
+
+    public List<Role> getRoles() {
+        return Objects.requireNonNullElseGet(roles, ArrayList::new);
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 
     public void assignRole(Role role) {
@@ -110,14 +110,17 @@ public class User implements UserDetails {
         return password;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -137,10 +140,6 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override

@@ -37,6 +37,7 @@ public class UserDaoImp implements UserDao {
         }
         manager.persist(user);
     }
+
     public void saveRole(Role role) {
         manager.persist(role);
     }
@@ -88,7 +89,7 @@ public class UserDaoImp implements UserDao {
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setAge(user.getAge());
-        updatedUser.setRoles(new ArrayList<Role>());
+        updatedUser.setRoles(new ArrayList<>());
         if (user.getRoles().contains("ADMIN")) {
             updatedUser.assignRole(getRoleByRolename("ROLE_ADMIN"));
         }

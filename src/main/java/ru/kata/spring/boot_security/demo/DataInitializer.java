@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.dao.UserDTO;
 import ru.kata.spring.boot_security.demo.model.Role;
-import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.transaction.Transactional;
@@ -16,11 +15,17 @@ import java.util.List;
 @Component
 public class DataInitializer implements ApplicationRunner {
 
-    @Autowired
-    private UserService userRepository;
+
+    private final UserService userRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public DataInitializer(UserService userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     @Override
     @Transactional
@@ -32,7 +37,7 @@ public class DataInitializer implements ApplicationRunner {
         userRepository.saveRole(adm);
         UserDTO user1 = new UserDTO("user@gmail.com", "user", "user", 30, List.of("USER"), "user");
         user1.setPassword(passwordEncoder.encode("user"));
-        UserDTO user2 = new UserDTO("admin@gmail.com","admin", "admin", 30, List.of("ADMIN"), "admin");
+        UserDTO user2 = new UserDTO("admin@gmail.com", "admin", "admin", 30, List.of("ADMIN"), "admin");
         user2.setPassword(passwordEncoder.encode("admin"));
         // Save users to database
         userRepository.saveUser(user1);

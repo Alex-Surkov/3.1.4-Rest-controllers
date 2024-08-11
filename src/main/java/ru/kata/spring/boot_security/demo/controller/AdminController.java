@@ -27,7 +27,6 @@ public class AdminController {
     private final UserService userService;
 
 
-
     @Autowired
     public AdminController(PasswordEncoder encoder, UserService userService) {
         this.encoder = encoder;
@@ -66,6 +65,7 @@ public class AdminController {
         model.addAttribute("users", users);
         return "admin";
     }
+
     @GetMapping("/delete")
     public String deleteget(@RequestParam("id") long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
