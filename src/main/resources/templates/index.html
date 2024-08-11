@@ -15,29 +15,10 @@
     </style>
 </head>
 <body>
-<ul class="nav nav-pills nav-fill">
-    <li class="nav-item">
-        <a class="nav-link active" href="admin">Активная</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="user">Гораздо более длинная навигационная ссылка</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="#">Ссылка</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Отключенная</a>
-    </li>
-</ul>
 <div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
+    <a href="admin">Admin page</a>
     <br>
-    <a href="admin">Only for admin</a>
-    <br>
-    <a href="user">Login for users</a>
-
+    <a href="user">User page</a>
 </div>
 <br><br><br>
 <a href="/logout">Logout</a>
