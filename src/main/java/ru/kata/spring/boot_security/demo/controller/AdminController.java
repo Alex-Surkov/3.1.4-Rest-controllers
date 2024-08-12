@@ -34,16 +34,24 @@ public class AdminController {
     }
 
     @ModelAttribute("currentUser")
-    public User currentUser() {
+    public UserDTO currentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (User) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
+        return new UserDTO(
+                user.getUsername(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getAge(),user.getRolenames(),
+                user.getPassword());
     }
 
 
     @GetMapping
     public String printUsers(ModelMap model) {
+
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
+        System.out.println("Cotroller");
         return "admin";
     }
 

@@ -26,11 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable() // Disable CSRF protection for testing purposes with Postman
                 .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/", "/index").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .httpBasic() // Enable Basic Authentication
                 .and()
                 .formLogin().successHandler(successUserHandler)
                 .permitAll()
