@@ -89,6 +89,7 @@ public class UserDaoImp implements UserDao {
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setAge(user.getAge());
+        updatedUser.setPassword(user.getPassword());
         updatedUser.setRoles(new ArrayList<>());
         if (user.getRoles().contains("ADMIN")) {
             updatedUser.assignRole(getRoleByRolename("ROLE_ADMIN"));

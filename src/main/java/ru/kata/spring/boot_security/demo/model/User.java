@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Table(name = "users")
 @Entity
@@ -58,6 +59,14 @@ public class User implements UserDetails {
 
     public List<Role> getRoles() {
         return Objects.requireNonNullElseGet(roles, ArrayList::new);
+    }
+
+    public List<String> getRolenames() {
+        // Check if roles are null, return an empty list if so, otherwise transform to List<String>
+        return Objects.requireNonNullElseGet(roles, ArrayList::new)
+                .stream()
+                .map(role -> ((Role) role).getAuthority())
+                .collect(Collectors.toList());
     }
 
     public void setRoles(List<Role> roles) {
