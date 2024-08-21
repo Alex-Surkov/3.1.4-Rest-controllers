@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Users</title>
+    <title>User Information</title>
     <style>
         table th, table td {
             padding: 5px;
@@ -18,8 +18,7 @@
 <div class="container-fluid bg-dark">
     <div class="row mb-4">
         <div class="col-md-6">
-            <p class="text-white font-weight-bold" th:text="${user.username + ' with roles: ' + user.getAuthorities()}">
-                user.id</p>
+            <p class="text-white font-weight-bold" id="user-info">Loading user information...</p>
         </div>
         <div class="col-md-6">
             <p><a class="btn text-secondary float-right" href="/logout">Logout »</a></p>
@@ -63,12 +62,12 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td th:text="${user.id}">user.id</td>
-                            <td th:text="${user.username}">user.username</td>
-                            <td th:text="${user.firstName}">user.firstName</td>
-                            <td th:text="${user.lastName}">user.lastName</td>
-                            <td th:text="${user.age}">user.age</td>
-                            <td th:text="${user.roles}">user.roles</td>
+                            <td id="user-id">Loading...</td>
+                            <td id="user-email">Loading...</td>
+                            <td id="user-name">Loading...</td>
+                            <td id="user-surname">Loading...</td>
+                            <td id="user-age">Loading...</td>
+                            <td id="user-roles">Loading...</td>
                         </tr>
                         </tbody>
                     </table>
@@ -86,6 +85,25 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('/api/user')
+            .then(response => response.json())
+            .then(user => {
+                document.getElementById('user-id').innerText = user.id;
+                document.getElementById('user-email').innerText = user.username;
+                document.getElementById('user-name').innerText = user.firstName;
+                document.getElementById('user-surname').innerText = user.lastName;
+                document.getElementById('user-age').innerText = user.age;
+                document.getElementById('user-roles').innerText = user.roles.join(', ');
+                document.getElementById('user-info').innerText = `${user.username} with roles: ${user.roles.join(', ')}`;
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                document.getElementById('user-info').innerText = 'Error loading user information';
+            });
+    });
+</script>
 
 </body>
 </html>

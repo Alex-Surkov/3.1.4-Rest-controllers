@@ -12,7 +12,11 @@ public class UserRestController {
 
     @GetMapping
     public User getUserDetails(@AuthenticationPrincipal User userDetails) {
-        // Return the authenticated user's details as JSON
         return userDetails;
+    }
+
+    @GetMapping("/user")
+    public String getGreetings() {
+        return "user";
     }
 }
